@@ -1,0 +1,38 @@
+# Maven
+target/
+.mvn/
+*.iml
+
+# IDE-specific files
+.idea/
+*.iws
+*.ipr
+*.project
+
+# Editor-specific files
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Compiled class files
+*.class
+
+# Log files (customize as needed)
+*.log
+
+# Configuration files that may contain sensitive data
+application*.properties
+application*.yml
+
+# Local development environment files
+.env
+
+# MongoDB-specific
+# Database files (adjust if your database files have a different extension)
+*.ns
+*.bson
+*.lock
