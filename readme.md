@@ -30,9 +30,9 @@ This is a basic CRUD (Create, Read, Update, Delete) application built using Reac
    git clone https://github.com/VhugoJc/Task-Manager.git
    cd Task-Manager
    ```
-2. **Start the application with Docker Compose:**
+2. **Build the project:**
     ```bash
-    docker-compose up -d
+    ./build_and_run.sh
     ```
     This command will:
     - Build the Docker images for the frontend, backend, and database.
