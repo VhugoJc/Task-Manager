@@ -13,53 +13,38 @@ This is a basic CRUD (Create, Read, Update, Delete) application built using Reac
 
 - **Frontend:** React
 - **Backend:** Spring Boot
-- **Database:** [Specify your database - e.g., MySQL, PostgreSQL, H2]
-- **Build Tools:** [Specify build tools - e.g., Maven, Gradle]
+- **Database:** MongoDB
+- **Build Tools:** Maven
+- **Containerization:** Docker
 
 ## Getting Started
+### Prerequisites
+
+* **Docker:** Make sure you have Docker installed and running on your system. [https://www.docker.com/get-started](https://www.docker.com/get-started)
+* **Docker Compose:** You'll need Docker Compose to run the multi-container application. [https://docs.docker.com/compose/install/](https://docs.docker.com/compose/install/)
+
+### Installation
 
 1. **Clone the repository:**
    ```bash
-   git clone [your-repository-url]
+   git clone https://github.com/VhugoJc/Task-Manager.git
+   cd Task-Manager
+   ```
+2. **Start the application with Docker Compose:**
+    ```bash
+    docker-compose up -d
+    ```
+    This command will:
+    - Build the Docker images for the frontend, backend, and database.
+    - Start the containers in the background (detached mode).
+3. **Access the application:**
+- Frontend: http://localhost:3000
+### Stopping the application:
+  ```bash
+    docker-compose down
+  ```
 
-2. **Backend Setup:**
-- Open a terminal or command prompt.
-- Navigate to the backend directory:
-  ```
-  cd [your-backend-directory-name] 
-  ```
-- Configure the database connection in the `application.properties` (or `application.yml`) file. 
-  - **Example (application.properties):**
-    ```properties
-    spring.datasource.url=jdbc:mysql://localhost:3306/[your-database-name]
-    spring.datasource.username=[your-database-username]
-    spring.datasource.password=[your-database-password]
-    spring.jpa.hibernate.ddl-auto=update 
-    ```
-- Build and run the Spring Boot application using your build tool:
-  ```
-  [your-build-command] [your-run-command]
-  ```
-  - For example, if you are using Maven, the commands would be:
-    ```
-    mvn clean install
-    mvn spring-boot:run
-    ```
-3. **Frontend Setup:**
- - Open a new terminal or command prompt.
- - Navigate to the frontend directory:
-   ```
-   cd [your-frontend-directory-name]
-   ```
- - Install the project dependencies:
-   ```
-   npm install
-   ```
- - Start the development server:
-   ```
-   npm start
-   ```
- - The application should now be running in your web browser, usually at `http://localhost:3000`. 
+
 ## API Documentation
 
 **[Option 1: Link to External Documentation]**
