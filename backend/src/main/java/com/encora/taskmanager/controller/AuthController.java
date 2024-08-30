@@ -1,8 +1,8 @@
 package com.encora.taskmanager.controller;
 
 import com.encora.taskmanager.config.JwtUtil;
-import com.encora.taskmanager.dto.LoginRequest;
-import com.encora.taskmanager.dto.LoginResponse;
+import com.encora.taskmanager.dto.LoginRequestDto;
+import com.encora.taskmanager.dto.LoginResponseDto;
 import com.encora.taskmanager.model.User;
 import com.encora.taskmanager.service.AuthenticationService;
 import com.encora.taskmanager.service.UserDetailsServiceImpl;
@@ -30,11 +30,11 @@ public class AuthController { private final AuthenticationManager authentication
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginRequest loginUserDto) {
+    public ResponseEntity<LoginResponseDto> authenticate(@RequestBody LoginRequestDto loginUserDto) {
         User authenticatedUser = authenticationService.authenticate(loginUserDto);
         String jwtToken = jwtTokenUtil.generateToken(authenticatedUser);
-        LoginResponse loginResponse = new LoginResponse(jwtToken);
-        return ResponseEntity.ok(loginResponse);
+        LoginResponseDto loginResponseDto = new LoginResponseDto(jwtToken);
+        return ResponseEntity.ok(loginResponseDto);
     }
 
 }
