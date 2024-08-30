@@ -1,18 +1,26 @@
 package com.encora.taskmanager.controller;
 
-import com.encora.taskmanager.service.TaskServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
+import com.encora.taskmanager.model.Task;
+import com.encora.taskmanager.service.TaskService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/api/task")
 public class TaskController {
-    @Autowired
-    private TaskServiceImpl taskService;
+    private final TaskService taskService;
 
+    public TaskController(TaskService taskService) {
+        this.taskService = taskService;
+    }
 
-    @GetMapping("/")
-    public String getHelloWorld(){
-        return taskService.getHelloWorld();
+    @PostMapping
+    public ResponseEntity<?> createTask(@RequestBody Task task) {
+        String userId = "useId";
+        Task createdTask = taskService.createTask(task, userId);
+        return ResponseEntity.ok(createdTask);
     }
 }
