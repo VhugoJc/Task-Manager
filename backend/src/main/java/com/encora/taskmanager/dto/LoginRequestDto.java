@@ -1,15 +1,15 @@
 package com.encora.taskmanager.dto;
 
-public class LoginRequest {
+public class LoginRequestDto {
 
     private String email;
     private String password;
 
     // Constructors
-    public LoginRequest() {
+    public LoginRequestDto() {
     }
 
-    public LoginRequest(String username, String password) {
+    public LoginRequestDto(String username, String password) {
         this.email = username;
         this.password = password;
     }
