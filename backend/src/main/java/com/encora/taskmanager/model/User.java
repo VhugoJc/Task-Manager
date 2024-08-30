@@ -3,13 +3,16 @@ package com.encora.taskmanager.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.Collection;
 
-@Document(collation = "users")
-public class User {
+@Document
+public class User implements UserDetails {
     @Id
     private String id;
 
@@ -33,6 +36,10 @@ public class User {
         this.name = name;
         this.email = email;
         this.password = password;
+    }
+
+    public User(String id) {
+        this.id = id;
     }
 
     // Getters and Setters
@@ -60,8 +67,18 @@ public class User {
         this.email = email;
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.email;
     }
 
     public void setPassword(String password) {
@@ -77,4 +94,6 @@ public class User {
                 ", email='" + email + '\'' +
                 '}';
     }
+
+
 }
