@@ -1,7 +1,6 @@
 package com.encora.taskmanager.dto;
 
 public class LoginResponseDto {
-
     private String token;
 
     // Constructor

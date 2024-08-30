@@ -1,7 +1,8 @@
 package com.encora.taskmanager.dto;
 
-public class ErrorResponseDto { private int status; private String message;
-    // Constructors, Getters, and Setters
+public class ErrorResponseDto {
+    private int status; private String message;
+    // Constructors
     public ErrorResponseDto(int status, String message) {
         this.status = status;
         this.message = message;

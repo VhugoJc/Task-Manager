@@ -9,7 +9,6 @@ import java.util.List;
 
 @Service
 public class TaskServiceImpl implements TaskService{
-
     private final TaskRepository taskRepository;
 
     public TaskServiceImpl(TaskRepository taskRepository) {
@@ -44,11 +43,9 @@ public class TaskServiceImpl implements TaskService{
     public void deleteTask(String id, String userId) {
         Task existingTask = taskRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Task not found with id: " + id));
-
         if (!existingTask.getUser().getId().equals(userId)) {
             throw new RuntimeException("User not authorized to delete this task");
         }
-
         taskRepository.deleteById(id);
     }
 

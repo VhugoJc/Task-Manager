@@ -1,7 +1,6 @@
 package com.encora.taskmanager.dto;
 
 public class LoginRequestDto {
-
     private String email;
     private String password;
 
@@ -13,7 +12,6 @@ public class LoginRequestDto {
         this.email = username;
         this.password = password;
     }
-
     // Getters and setters
     public String getEmail() {
         return email;
