@@ -28,8 +28,8 @@ public class TaskServiceImpl implements TaskService{
     }
 
     @Override
-    public Task createTask(Task task, String userEmail) {
-        User user = userRepository.findByEmail(userEmail)
+    public Task createTask(Task task, String id) {
+        User user = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(messageSource.getMessage(
                         "user.not.found",
                         null,
