@@ -51,9 +51,8 @@ public class TaskServiceImpl implements TaskService{
         try {
             // Try to find the task by ID
             Task existingTask = taskRepository.findById(id).get();
-
             // Check if the task has an associated user
-            if (existingTask.getUser() == null || !existingTask.getUser().getEmail().equals(userId)) {
+            if (existingTask.getUser() == null || !existingTask.getUser().getId().equals(userId)) {
                 throw new UserNotFoundException(messageSource.getMessage(
                         "user.not.authorized",
                         null,
