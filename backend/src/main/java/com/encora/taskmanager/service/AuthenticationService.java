@@ -10,10 +10,12 @@ import org.springframework.context.MessageSource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Locale;
+import java.util.Optional;
 
 
 @Service
@@ -39,7 +41,6 @@ public class AuthenticationService {
 
 
     public User authenticate(LoginRequestDto input) {
-        System.out.println(currentLocale);
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
@@ -47,8 +48,21 @@ public class AuthenticationService {
                             input.getPassword()
                     )
             );
-            // Authentication successful, retrieve the user
-            return userRepository.findByEmail(input.getEmail());
+
+            // Get the Optional<User> from the repository
+            Optional<User> optionalUser = userRepository.findByEmail(input.getEmail());
+
+            // Check if the user exists
+            if (optionalUser.isPresent()) {
+                // Get the User object from the Optional
+                User user = optionalUser.get();
+
+                // Authentication successful, retrieve the user
+                return user;
+            } else {
+                // User not found, throw an exception
+                throw new UsernameNotFoundException("User not found with email: " + input.getEmail());
+            }
         } catch (AuthenticationException e) {
             // Authentication failed, throw an exception
             throw new UserNotFoundException(messageSource.getMessage(

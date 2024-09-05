@@ -25,4 +25,12 @@ public class GlobalExceptionHandler {
     public ErrorResponseDto handleInvalidJwtTokenException(InvalidJwtTokenException ex) {
         return new ErrorResponseDto(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
     }
+
+    @ExceptionHandler(TaskNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseBody
+    public ErrorResponseDto handleTaskNotFoundException(TaskNotFoundException ex) {
+        return new ErrorResponseDto(HttpStatus.NOT_FOUND.value(), ex.getMessage());
+    }
+
 }

@@ -55,13 +55,13 @@ public class JwtUtil {
                     .getBody()
                     .getSubject();
         } catch (JwtException e) {
-            throw new InvalidJwtTokenException(STR."Invalid JWT token: \{e.getMessage()}");
+            throw new InvalidJwtTokenException("Invalid JWT token");
         }
     }
 
     public boolean validateToken(String token, UserDetails userDetails) {
         String username = getUsernameFromToken(token);
-        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+        return username.equals(userDetails.getUsername()) && !isTokenExpired(token);
     }
 
     private boolean isTokenExpired(String token) {

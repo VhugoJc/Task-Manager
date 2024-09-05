@@ -7,18 +7,20 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Document("tasks")
 public class Task {
     @Id
-    private String Id;
+    private String id;
 
     @NotBlank(message = "Name is required")
     @Size(min = 2, max = 30, message = "Name must be between 2 and 30 characters")
     private String name;
 
     private LocalDateTime dueDate;
+
+
+    private boolean completed;
 
     @DBRef
     private User user; // Reference to the User model
@@ -30,6 +32,19 @@ public class Task {
         this.name = name;
         this.dueDate = dueDate;
         this.user = user;
+        this.completed = false;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
     }
 
     public String getName() {
@@ -56,7 +71,7 @@ public class Task {
         this.user = user;
     }
 
-    public void setId(String Id) {
-        this.Id = Id;
+    public void setId(String id) {
+        this.id = id;
     }
 }
