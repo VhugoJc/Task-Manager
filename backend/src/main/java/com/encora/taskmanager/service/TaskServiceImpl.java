@@ -1,6 +1,6 @@
 package com.encora.taskmanager.service;
 
-import com.encora.taskmanager.dto.ErrorResponseDto;
+import com.encora.taskmanager.dto.SuccessfulResponse;
 import com.encora.taskmanager.exception.TaskNotFoundException;
 import com.encora.taskmanager.exception.UserNotFoundException;
 import com.encora.taskmanager.model.Task;
@@ -73,19 +73,32 @@ public class TaskServiceImpl implements TaskService{
     }
 
     @Override
-    public void deleteTask(String id, String userId) {
-        Task existingTask = taskRepository.findById(id)
-                .orElseThrow(() ->   new UserNotFoundException(messageSource.getMessage(
-                "user.not.found",
-                null,
-                Locale.forLanguageTag(currentLocale))));
-        if (!existingTask.getUser().getId().equals(userId)) {
-            throw new UserNotFoundException(messageSource.getMessage(
-                    "user.not.authorized",
-                    null,
+    public SuccessfulResponse deleteTask(String id, String userId) {
+        try {
+            // Try to find the task by ID
+            Task existingTask = taskRepository.findById(id).get();
+            // Check if the task has an associated user
+            if (existingTask.getUser() == null || !existingTask.getUser().getId().equals(userId)) {
+                throw new UserNotFoundException(messageSource.getMessage(
+                        "user.not.authorized",
+                        null,
+                        Locale.forLanguageTag(currentLocale)));
+            }
+            taskRepository.deleteById(id);
+            SuccessfulResponse successfulResponse = new SuccessfulResponse(
+                    HttpStatus.OK.value(),
+                    messageSource.getMessage(
+                            "task.deleted.successfully",
+                            null,
+                            Locale.forLanguageTag(currentLocale)));
+            return successfulResponse;
+        } catch (NoSuchElementException e) {
+            // Handle the case where the task is not found
+            throw new TaskNotFoundException(messageSource.getMessage(
+                    "task.not.found",
+                    new Object[] {id},
                     Locale.forLanguageTag(currentLocale)));
         }
-        taskRepository.deleteById(id);
     }
 
 
