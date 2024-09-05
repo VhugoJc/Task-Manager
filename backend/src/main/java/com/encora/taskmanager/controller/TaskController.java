@@ -1,5 +1,6 @@
 package com.encora.taskmanager.controller;
 
+import com.encora.taskmanager.dto.ErrorResponseDto;
 import com.encora.taskmanager.dto.TaskResponseDto;
 import com.encora.taskmanager.exception.InvalidJwtTokenException;
 import com.encora.taskmanager.exception.TaskNotFoundException;
@@ -14,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 @RestController
@@ -79,14 +81,29 @@ public class TaskController {
             TaskResponseDto responseDto = convertToDto(updatedTask);
             return ResponseEntity.ok(responseDto);
         } catch (UserNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+            ErrorResponseDto errorResponseDto = new ErrorResponseDto(
+                    HttpStatus.UNAUTHORIZED.value(),
+                    e.getMessage()
+            );
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponseDto);
         } catch (InvalidJwtTokenException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        } catch (TaskNotFoundException e) { // Catch TaskNotFoundException
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+            ErrorResponseDto errorResponseDto = new ErrorResponseDto(
+                    HttpStatus.BAD_REQUEST.value(),
+                    e.getMessage()
+            );
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponseDto);
+        } catch (TaskNotFoundException e) { // Catch
+            ErrorResponseDto errorResponseDto = new ErrorResponseDto(
+                    HttpStatus.BAD_REQUEST.value(),
+                    e.getMessage()
+            );
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponseDto);
         } catch (Exception e) { // Catch general exceptions
-            System.out.println(e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while updating the task.");
+            ErrorResponseDto errorResponseDto = new ErrorResponseDto(
+                    HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                    e.getMessage()
+            );
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponseDto);
         }
     }
 }
