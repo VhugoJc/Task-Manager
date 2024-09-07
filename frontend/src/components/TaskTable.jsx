@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Table } from 'antd';
+import { Pagination, Table } from 'antd';
 
 const columns = [
   {
@@ -29,28 +29,19 @@ const columns = [
 ];
 
 const TaskTable = ({ tasks }) => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 10; // Number of tasks per page
-
-  const paginatedTasks = tasks.slice((currentPage - 1) * pageSize, currentPage * pageSize);
-
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
+    const [currentPage, setCurrentPage] = useState(1);
+    const pageSize = 10; // Number of tasks per page
+  
+    return (
+        <div style={{ width: 800, position: 'relative' }}> {/* Set fixed width */}
+          <Table
+            dataSource={tasks.slice((currentPage - 1) * pageSize, currentPage * pageSize)}
+            columns={columns}
+            scroll={{ x: 800 }} // Make table horizontally scrollable if needed
+            pagination={false} 
+          />
+        </div>
+    );
   };
-
-  return (
-    <Table
-      dataSource={paginatedTasks}
-      columns={columns}
-      pagination={{
-        current: currentPage,
-        pageSize: pageSize,
-        total: tasks.length,
-        onChange: handlePageChange,
-      }}
-      scroll={{ x: 800 }} // Adjust the value as needed
-    />
-  );
-};
-
-export default TaskTable;
+  
+  export default TaskTable;

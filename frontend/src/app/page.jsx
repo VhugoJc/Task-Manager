@@ -1,14 +1,15 @@
 "use client";
 
 import UserLayout from "@/layout/UserLayout";
-import React from "react";
+import React, { useState } from "react";
+import TaskSection from "@/components/TaskSection";
+
 
 export default function Home() {
+
   return (
-    <UserLayout
-      title="Task Manager"
-    >
-      <h1>Hello World</h1>
+    <UserLayout title="Task Manager">
+      <TaskSection/>
     </UserLayout>
   );
 }
