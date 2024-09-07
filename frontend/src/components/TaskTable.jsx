@@ -35,8 +35,8 @@ const TaskTable = ({ tasks }) => {
     return (
         <div style={{ width: 800, position: 'relative' }}> {/* Set fixed width */}
           <Table
-            dataSource={tasks.slice((currentPage - 1) * pageSize, currentPage * pageSize)}
-            columns={columns}
+           dataSource={tasks.slice((currentPage - 1) * pageSize, currentPage * pageSize).map((task) => ({ ...task, key: task.id }))} // Add key here
+           columns={columns}
             scroll={{ x: 800 }} // Make table horizontally scrollable if needed
             pagination={false} 
           />
