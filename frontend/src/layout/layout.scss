@@ -27,3 +27,52 @@
     }
 
 }
+.auth-layout{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: url("../../public/pattern_hexagon-6_1_2_0-0_0_1__ffffff_805ad5.png");
+}
+// src/layout/layout.scss
+.header {
+    background: #805AD5; // Your main color
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 64px - 64px); // Adjust height for header and footer
+    overflow: hidden; // Prevent scrolling
+  }
+  
+  .footer {
+    background: #333;
+    color: white;
+    text-align: center;
+  }
+  
+  .login-container {
+    // ... your existing styles ...
+  }
+  
+  .login-card {
+    // ... your existing styles ...
+  }
+  
+  .login-title {
+    // ... your existing styles ...
+  }
+  
+  .login-form {
+    // ... your existing styles ...
+  }
