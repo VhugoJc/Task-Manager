@@ -1,4 +1,4 @@
-.user-layout {
+.user-layout, .auth-layout  {
     position: absolute;
     right: 0;
     top: 0;
@@ -26,6 +26,18 @@
         text-align: center;
     }
 
+    @media (max-width: 768px) { // Adjust breakpoint as needed
+        &-content {
+            height: auto; // Allow content to grow vertically
+            padding: 2rem 1rem; // Add padding for better mobile view
+        }
+
+        .login-card {
+            width: 100%; // Card takes full width on mobile
+            min-width: auto; // Remove min-width restriction
+            max-width: 400px; // Limit card width on larger screens
+        }
+    }
 }
 .auth-layout{
     position: absolute;

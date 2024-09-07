@@ -6,9 +6,9 @@ import AuthLayout from "@/layout/AuthLayout";
 
 const SignUp = () => {
   const [name, setName] = useState("");
-  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [repeatPassword, setRepeatPassword] = useState("");
 
   const handleSubmit = (values) => {
     // Handle signup submission here (e.g., send data to backend)
@@ -19,7 +19,7 @@ const SignUp = () => {
     <AuthLayout title="Task Manager" linkText="I already have an account" linkHref="/auth/login">
       <Form onFinish={handleSubmit} layout="vertical" className="login-form">
         <Row gutter={16}>
-          <Col span={24}>
+          <Col  xs={24} lg={12} xl={12}>
             <Form.Item
               label="Name"
               name="name"
@@ -28,16 +28,7 @@ const SignUp = () => {
               <Input value={name} onChange={(e) => setName(e.target.value)} />
             </Form.Item>
           </Col>
-          <Col span={24}>
-            <Form.Item
-              label="Last Name"
-              name="lastName"
-              rules={[{ required: true, message: "Please input your last name!" }]}
-            >
-              <Input value={lastName} onChange={(e) => setLastName(e.target.value)} />
-            </Form.Item>
-          </Col>
-          <Col span={24}>
+          <Col  xs={24} lg={12} xl={12}>
             <Form.Item
               label="Email"
               name="email"
@@ -46,7 +37,7 @@ const SignUp = () => {
               <Input value={email} onChange={(e) => setEmail(e.target.value)} />
             </Form.Item>
           </Col>
-          <Col span={24}>
+          <Col  xs={24} lg={12} xl={12}>
             <Form.Item
               label="Password"
               name="password"
@@ -55,6 +46,18 @@ const SignUp = () => {
               <Input.Password
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+              />
+            </Form.Item>
+          </Col>
+          <Col  xs={24} lg={12} xl={12}>
+            <Form.Item
+              label="Repeat Password"
+              name="repeatPassword"
+              rules={[{ required: true, message: "Please input your password!" }]}
+            >
+              <Input.Password
+                value={repeatPassword}
+                onChange={(e) => setRepeatPassword(e.target.value)}
               />
             </Form.Item>
           </Col>
