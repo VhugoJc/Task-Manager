@@ -1,10 +1,13 @@
 "use client";
 import React, { useState } from "react";
 import { Form, Input, Button, Checkbox, Card, Row, Col } from "antd";
-import "./login.scss";
+import "../login.scss";
+import Link from "next/link";
 
 // 805AD5
-const Login = () => {
+const SignUp = () => {
+  const [name, setName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -20,6 +23,24 @@ const Login = () => {
         <h1 className="login-title">Task Manager</h1>
         <Form onFinish={handleSubmit} layout="vertical" className="login-form">
           <Row gutter={16}>
+            <Col span={24}>
+              <Form.Item
+                label="name"
+                name="name"
+                rules={[{ required: true, message: "Please input your name!" }]}
+              >
+                <Input value={name} onChange={(e) => setName(e.target.value)} />
+              </Form.Item>
+            </Col>
+            <Col span={24}>
+              <Form.Item
+                label="last name"
+                name="lastName"
+                rules={[{ required: true, message: "Please input your last name!" }]}
+              >
+                <Input value={lastName} onChange={(e) => setLastName(e.target.value)} />
+              </Form.Item>
+            </Col>
             <Col span={24}>
               <Form.Item
                 label="email"
@@ -44,13 +65,16 @@ const Login = () => {
           </Row>
           <Form.Item>
             <Button type="primary" htmlType="submit" style={{ height: "40px", marginTop:"15px" }} block className="login-button">
-              Login
+              Sign Up
             </Button>
           </Form.Item>
+          <Link href={"/auth/login"}>
+            I already have an account
+          </Link>
         </Form>
       </Card>
     </div>
   );
 };
 
-export default Login;
+export default SignUp;
