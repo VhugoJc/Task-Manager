@@ -34,10 +34,10 @@ const UserMenu = () => {
       >
         <Menu theme="light" mode="vertical">
           <Menu.Item key="1">
-            <Link href="#">Option 1</Link>
+            <Link href="/">Tasks</Link>
           </Menu.Item>
           <Menu.Item key="2">
-            <Link href="#">Option 2</Link>
+            <Link href="/dashboard">Dashboard</Link>
           </Menu.Item>
           {/* Add more menu items as needed */}
         </Menu>
