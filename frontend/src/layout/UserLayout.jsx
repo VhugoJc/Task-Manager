@@ -2,20 +2,32 @@
 import React from "react";
 import { Layout, Card } from "antd";
 import "./layout.scss";
-import Link from "next/link";
+import UserMenu from "./UserMenu";
 
 const { Header, Content, Footer } = Layout;
 
-const UserLayout = ({ children, title }) => {
+const UserLayout = ({ children }) => {
   return (
     <Layout className="user-layout">
       <Header className="user-layout-header">
-        {/* Your navigation content goes here */}
-        <h1 style={{ color: "white" }}>{title}</h1>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between", // Distributes space between title and menu
+            alignItems: "center",
+            width: "100%",
+          }}
+        >
+          <h1 style={{ color: "white", flex: 1, textAlign: "center" }}>
+            {" "}
+            {/* Allow title to grow and center text */}
+            Task Manager
+          </h1>
+          <UserMenu style={{ flex: 0 }} /> {/* Prevent menu from growing */}
+        </div>
       </Header>
       <Content className="user-layout-content">{children}</Content>
       <Footer className="user-layout-footer">
-        {/* Your footer content goes here */}
         <p>&copy; 2024 Task Manager - Victor Jimenez</p>
       </Footer>
     </Layout>

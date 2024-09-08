@@ -8,7 +8,7 @@ import TaskSection from "@/components/TaskSection";
 export default function Home() {
 
   return (
-    <UserLayout title="Task Manager">
+    <UserLayout>
       <TaskSection/>
     </UserLayout>
   );
