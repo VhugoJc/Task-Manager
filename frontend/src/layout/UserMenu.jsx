@@ -39,6 +39,9 @@ const UserMenu = () => {
           <Menu.Item key="2">
             <Link href="/dashboard">Dashboard</Link>
           </Menu.Item>
+          <Menu.Item key="3">
+            <Link href="/profile">Profile</Link>
+          </Menu.Item>
           {/* Add more menu items as needed */}
         </Menu>
       </Drawer>
