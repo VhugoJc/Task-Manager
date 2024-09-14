@@ -1,0 +1,13 @@
+.task-container {
+    position: relative;
+    margin: 1rem 0rem 3rem 0;
+  
+    .pagination-container {
+      position: absolute;
+      bottom: 0;
+      right: 0; 
+      display: inline-block; // Add this line
+      text-align: right;
+      padding: 8px;
+    }
+  }
