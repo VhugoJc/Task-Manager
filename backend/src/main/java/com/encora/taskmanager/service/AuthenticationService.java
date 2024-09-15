@@ -42,13 +42,6 @@ public class AuthenticationService {
 
     public User authenticate(LoginRequestDto input) {
         try {
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            input.getEmail(),
-                            input.getPassword()
-                    )
-            );
-
             // Get the Optional<User> from the repository
             Optional<User> optionalUser = userRepository.findByEmail(input.getEmail());
 
