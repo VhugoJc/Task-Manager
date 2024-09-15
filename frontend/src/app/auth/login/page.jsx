@@ -1,17 +1,31 @@
 // src/app/auth/login/page.jsx
-"use client";
-import React, { useState } from "react";
+"use client";import React, { useState, useContext } from "react";
+import { UserContext } from "@/context/UserContext"; // Adjust the import path as needed
+import { login } from "@/api/auth"; // Import the login function
+
 import { Form, Input, Button, Row, Col } from "antd";
 import AuthLayout from "@/layout/AuthLayout"; 
 import "../login.scss"; 
+import { useRouter } from "next/navigation";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { setUser } = useContext(UserContext); // Get the setUser function from context
+  const router = useRouter(); // Initialize useRouter
 
-  const handleSubmit = (values) => {
-    // Handle login submission here (e.g., send data to backend)
-    console.log("Login submitted:", values);
+  const handleSubmit = async() => {
+    try {
+      const userData = await login(email, password);
+      console.log('Login successful:', userData);
+      setUser(userData); // Update the context with user data
+      if (typeof window !== "undefined") {
+        router.push("/");
+      }
+    } catch (error) {
+      console.error('Login failed:', error);
+      // Handle login error (e.g., show error message)
+    }
   };
 
   return (
