@@ -19,7 +19,6 @@ export const UserProvider = ({ children }) => {
   };
 
   const getToken = () => {
-    console.log('User object:', JSON.stringify(user.jwt)); // Debugging line to log the user object
     return user?.jwt;
   };
 

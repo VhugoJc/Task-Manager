@@ -1,47 +1,39 @@
-import React, { useState } from 'react';
-import { Pagination, Table } from 'antd';
+import { Table, Checkbox } from "antd";
+import { useState } from "react";
 
 const columns = [
   {
-    title: 'ID',
-    dataIndex: 'id',
-    key: 'id',
-    width: '10%', 
+    title: "Task Name",
+    dataIndex: "name",
+    key: "name",
   },
   {
-    title: 'Task Name',
-    dataIndex: 'name',
-    key: 'name',
-    width: '30%',
+    title: "Due Date",
+    dataIndex: "dueDate",
+    key: "dueDate",
   },
   {
-    title: 'Status',
-    dataIndex: 'status',
-    key: 'status',
-    width: '20%',
-  },
-  {
-    title: 'Due Date',
-    dataIndex: 'dueDate',
-    key: 'dueDate',
-    width: '20%',
+    title: "Completed",
+    dataIndex: "completed",
+    key: "completed",
+    render: (completed) => <Checkbox checked={completed} />,
   },
 ];
 
 const TaskTable = ({ tasks }) => {
-    const [currentPage, setCurrentPage] = useState(1);
-    const pageSize = 10; // Number of tasks per page
-  
-    return (
-        <div style={{ width: 800, position: 'relative' }}> {/* Set fixed width */}
-          <Table
-           dataSource={tasks.slice((currentPage - 1) * pageSize, currentPage * pageSize).map((task) => ({ ...task, key: task.id }))} // Add key here
-           columns={columns}
-            scroll={{ x: 800 }} // Make table horizontally scrollable if needed
-            pagination={false} 
-          />
-        </div>
-    );
-  };
-  
-  export default TaskTable;
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 10; // Number of tasks per page
+
+  return (
+    <div style={{ width: 800, position: 'relative' }}> {/* Set fixed width */}
+      <Table
+        dataSource={tasks.slice((currentPage - 1) * pageSize, currentPage * pageSize).map((task) => ({ ...task, key: task.id }))} // Add key here
+        columns={columns}
+        scroll={{ x: 800 }} // Make table horizontally scrollable if needed
+        pagination={false} 
+      />
+    </div>
+  );
+};
+
+export default TaskTable;
