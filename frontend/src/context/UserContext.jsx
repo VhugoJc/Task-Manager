@@ -8,16 +8,26 @@ export const UserContext = createContext();
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
-  const login = (jwt) => {
+  const loginJWT = (jwt) => {
     setUser({ jwt });
+    localStorage.setItem('token', jwt);
   };
 
   const logout = () => {
     setUser(null);
+    localStorage.removeItem('token');
   };
 
+  const checkLocalStorage = () => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      setUser({ jwt: token });
+      return true;
+    }
+    return false;
+  } 
   return (
-    <UserContext.Provider value={{ user, login, logout }}>
+    <UserContext.Provider value={{ user, loginJWT, logout, checkLocalStorage }}>
       {children}
     </UserContext.Provider>
   );
