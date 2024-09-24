@@ -1,9 +1,10 @@
 "use client";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Layout, Drawer, Menu, Modal } from "antd";
 import "./layout.scss";
 import Link from "next/link";
 import { BookOutlined, DashboardOutlined, LogoutOutlined, MenuOutlined, UserOutlined } from "@ant-design/icons";
+import { UserContext } from "../context/UserContext";
 import ProfileSection from "../components/ProfileSection";
 
 const { Header, Content, Footer } = Layout;
@@ -12,6 +13,7 @@ const { Header, Content, Footer } = Layout;
 const UserMenu = ({ userData }) => {
   const [visible, setVisible] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { logout } = useContext(UserContext);
 
   const showDrawer = () => {
     setVisible(true);
@@ -26,9 +28,8 @@ const UserMenu = ({ userData }) => {
   };
 
   const handleOk = () => {
-    // Perform actual logout action here (e.g., redirect to logout page)
-    console.log("Logging out...");
     setIsModalOpen(false);
+    logout();
   };
 
   const handleCancel = () => {
