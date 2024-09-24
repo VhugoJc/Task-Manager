@@ -26,7 +26,8 @@ const Login = () => {
   const handleSubmit = async () => {
     try {
       const userData = await login(email, password);
-      loginJWT(userData); // Update the context with user data
+      console.log("User data:", userData);
+      loginJWT(userData.token); // Update the context with user data
       if (typeof window !== "undefined") {
         router.push("/");
       }

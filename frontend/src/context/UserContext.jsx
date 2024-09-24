@@ -1,5 +1,5 @@
 "use client"
-import React, { createContext, useState, useContext } from "react";
+import React, { createContext, useState } from 'react';
 
 // Create the context
 export const UserContext = createContext();
@@ -18,6 +18,11 @@ export const UserProvider = ({ children }) => {
     localStorage.removeItem('token');
   };
 
+  const getToken = () => {
+    console.log('User object:', JSON.stringify(user.jwt)); // Debugging line to log the user object
+    return user?.jwt;
+  };
+
   const checkLocalStorage = () => {
     const token = localStorage.getItem('token');
     if (token) {
@@ -25,9 +30,10 @@ export const UserProvider = ({ children }) => {
       return true;
     }
     return false;
-  } 
+  };
+
   return (
-    <UserContext.Provider value={{ user, loginJWT, logout, checkLocalStorage }}>
+    <UserContext.Provider value={{ user, loginJWT, logout, checkLocalStorage, getToken }}>
       {children}
     </UserContext.Provider>
   );
