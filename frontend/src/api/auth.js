@@ -13,20 +13,10 @@ export const login = async (email, password) => {
   }
 };
 
-// Logout function
-export const logout = async () => {
-  try {
-    const response = await axios.post(`${API_URL}/logout`);
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
-};
-
 // Register function
-export const register = async (username, password) => {
+export const register = async (email, password, name) => {
   try {
-    const response = await axios.post(`${API_URL}/register`, { username, password });
+    const response = await axios.post(`${API_URL}/users`, { email, password, name });
     return response.data;
   } catch (error) {
     throw error;
