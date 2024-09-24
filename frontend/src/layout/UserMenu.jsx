@@ -52,7 +52,7 @@ const UserMenu = ({ userData }) => {
         title="Menu"
         placement="right"
         onClose={onClose}
-        visible={visible}
+        open={visible}
       >
         <Menu theme="light" mode="vertical">
         <Menu.Item key="1">

@@ -7,7 +7,7 @@ const NewTaskModal = ({ visible, onCreate, setIsModalVisible }) => {
   return (
     <Modal
       title="Add New Task"
-      visible={visible}
+      open={visible}
       onOk={() => {
         form
           .validateFields()
