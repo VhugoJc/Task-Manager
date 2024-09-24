@@ -31,21 +31,20 @@ export const getTaskById = async (taskId) => {
   }
 };
 
-// Create a new task
-export const createTask = async (taskData) => {
-  try {
-    const token = getToken();
-    const response = await axios.post(API_URL, taskData, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
-};
-
+// Function to create a task
+export const createTask = async (taskData, token) => {
+    try {
+      const response = await axios.post(API_URL, taskData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      throw new Error('Failed to create task');
+    }
+  };
+  
 // Update an existing task
 export const updateTask = async (taskId, taskData) => {
   try {
