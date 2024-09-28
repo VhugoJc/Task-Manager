@@ -1,26 +1,25 @@
 "use client";
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
-import { Form, Input, Button, Row, Col, message } from "antd";
-import AuthLayout from "@/layout/AuthLayout";
-import { register } from "@/api/auth"; // Import the register function from the auth API
+import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { Form, Input, Row, Col, message } from 'antd';
+import AuthLayout from '../../../layout/AuthLayout'; // Adjust the import path as necessary
+import { signup } from '../../../api/auth'; // Adjust the import path as necessary
 
-const SignUp = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [repeatPassword, setRepeatPassword] = useState("");
+const RegisterPage = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
   const handleSubmit = async () => {
     setIsSubmitting(true);
     try {
-      await register(email, password, name); // Call the register function with the email, password, and name
-      message.success("Signup successful!");
-      router.push("/auth/login"); // Redirect to /login on success
+      await signup(email, password, name);
+      message.success('Signup successful!');
+      router.push('/auth/login'); // Redirect to /login on success
     } catch (error) {
-      message.error("Signup failed. Please try again.");
+      message.error('Signup failed. Please try again.');
       console.log(error);
       setIsSubmitting(false);
     }
@@ -34,7 +33,7 @@ const SignUp = () => {
             <Form.Item
               label="Name"
               name="name"
-              rules={[{ required: true, message: "Please input your name!" }]}
+              rules={[{ required: true, message: 'Please input your name!' }]}
             >
               <Input value={name} onChange={(e) => setName(e.target.value)} />
             </Form.Item>
@@ -43,7 +42,7 @@ const SignUp = () => {
             <Form.Item
               label="Email"
               name="email"
-              rules={[{ required: true, message: "Please input your email!" }]}
+              rules={[{ required: true, message: 'Please input your email!' }]}
             >
               <Input value={email} onChange={(e) => setEmail(e.target.value)} />
             </Form.Item>
@@ -52,40 +51,20 @@ const SignUp = () => {
             <Form.Item
               label="Password"
               name="password"
-              rules={[{ required: true, message: "Please input your password!" }]}
+              rules={[{ required: true, message: 'Please input your password!' }]}
             >
               <Input.Password value={password} onChange={(e) => setPassword(e.target.value)} />
             </Form.Item>
           </Col>
-          <Col xs={24} lg={12} xl={12}>
-            <Form.Item
-              label="Repeat Password"
-              name="repeatPassword"
-              dependencies={['password']}
-              rules={[
-                { required: true, message: "Please repeat your password!" },
-                ({ getFieldValue }) => ({
-                  validator(_, value) {
-                    if (!value || getFieldValue('password') === value) {
-                      return Promise.resolve();
-                    }
-                    return Promise.reject(new Error('The two passwords do not match!'));
-                  },
-                }),
-              ]}
-            >
-              <Input.Password value={repeatPassword} onChange={(e) => setRepeatPassword(e.target.value)} />
-            </Form.Item>
-          </Col>
         </Row>
         <Form.Item>
-          <Button type="primary" htmlType="submit" disabled={isSubmitting}>
-            {isSubmitting ? "Submitting..." : "Sign Up"}
-          </Button>
+          <button type="submit" disabled={isSubmitting}>
+            Register
+          </button>
         </Form.Item>
       </Form>
     </AuthLayout>
   );
 };
 
-export default SignUp;
+export default RegisterPage;
