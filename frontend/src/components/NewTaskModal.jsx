@@ -1,7 +1,7 @@
 import { Modal, Form, message } from 'antd';
 import NewTaskForm from './NewTaskForm';
-import { createTask } from '../api/task';
-import { useContext } from 'react';
+import { createTask, updateTask } from '../api/task'; // Import updateTask API
+import { useContext, useEffect } from 'react';
 import { UserContext } from '../context/UserContext';
 import moment from 'moment';
 
@@ -13,43 +13,59 @@ const formatTaskValues = (values) => {
   };
 };
 
-const NewTaskModal = ({ visible, onCreate, setIsModalVisible }) => {
+const TaskModal = ({ visible, task, onSubmit, onClose }) => {
   const [form] = Form.useForm();
   const { getToken } = useContext(UserContext);
 
-  const handleCreateTask = async (values) => {
+  useEffect(() => {
+    if (task) {
+      form.setFieldsValue({
+        ...task,
+        dueDate: task.dueDate ? moment(task.dueDate) : null,
+      });
+    } else {
+      form.resetFields();
+    }
+  }, [task, form]);
+
+  const handleSubmit = async (values) => {
     const token = getToken();
+    const formattedValues = formatTaskValues(values);
     try {
-      const formattedValues = formatTaskValues(values);
-      await createTask(formattedValues, token);
-      message.success('Task created successfully');
-      onCreate(formattedValues);
+      if (task) {
+        await updateTask(task.id, formattedValues, token);
+        message.success('Task updated successfully');
+      } else {
+        await createTask(formattedValues, token);
+        message.success('Task created successfully');
+        onSubmit(formattedValues);
+        return
+      }
     } catch (error) {
-      message.error('Failed to create task');
-      console.error('Create Task Failed:', error);
+      message.error(`Failed to ${task ? 'update' : 'create'} task`);
+      console.error(`${task ? 'Update' : 'Create'} Task Failed:`, error);
     }
   };
 
   return (
     <Modal
-      title="Add New Task"
+      title={task ? "Edit Task" : "Add New Task"}
       open={visible}
       onOk={() => {
         form
           .validateFields()
           .then(values => {
-            form.resetFields();
-            handleCreateTask(values);
+            handleSubmit(values);
           })
           .catch(info => {
             console.log('Validate Failed:', info);
           });
       }}
-      onCancel={() => setIsModalVisible(false)}
+      onCancel={onClose}
     >
       <NewTaskForm form={form} />
     </Modal>
   );
 };
 
-export default NewTaskModal;
+export default TaskModal;

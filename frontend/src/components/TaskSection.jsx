@@ -4,18 +4,23 @@ import TaskFilter from "./TaskFilter";
 import "./TaskSection.scss";
 import { useContext, useEffect, useState } from "react";
 import NewTaskModal from "./NewTaskModal";
-import { getTasks } from '../api/task';
-import {UserContext} from '../context/UserContext';
+import { getTasks } from "../api/task";
+import { UserContext } from "../context/UserContext";
 
 const TaskSection = () => {
   const { getToken, logout } = useContext(UserContext);
   const [tasks, setTasks] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const pageSize = 10; // Number of tasks per
+  const itemsPerPage = 10;
   const [loading, setLoading] = useState(true);
 
-  
+  // Calculate the indices for slicing the tasks array
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+
+  // Slice the tasks array to get the items for the current page
+  const currentTasks = tasks.slice(startIndex, endIndex);
 
   useEffect(() => {
     const fetchTasks = async () => {
@@ -24,8 +29,8 @@ const TaskSection = () => {
         const fetchedTasks = await getTasks(token);
         setTasks(fetchedTasks);
       } catch (error) {
-        console.error('Failed to fetch tasks:', error);
-        if(error.response.status === 401) {
+        console.error("Failed to fetch tasks:", error);
+        if (error.response.status === 401) {
           logout();
         }
       } finally {
@@ -35,7 +40,6 @@ const TaskSection = () => {
 
     fetchTasks();
   }, []);
-
 
   const handleFilterChange = (filters) => {
     const { searchTerm, status } = filters;
@@ -55,6 +59,7 @@ const TaskSection = () => {
   };
 
   const handlePageChange = (page) => {
+    console.log("Page changed to: ", page);
     setCurrentPage(page);
   };
 
@@ -68,10 +73,10 @@ const TaskSection = () => {
   };
 
   if (loading) {
-    return <p>Loading...</p>
+    return <p>Loading...</p>;
   }
-  
-    return (
+
+  return (
     <Card className="task-container">
       <div className="task-manager-container">
         <div
@@ -96,20 +101,21 @@ const TaskSection = () => {
           </Col>
         </Row>
         <div className="table-section">
-          <TaskTable tasks={tasks} />
+          <TaskTable tasks={currentTasks} />
         </div>
         <div className="pagination-container">
           <Pagination
             current={currentPage}
-            pageSize={pageSize}
+            pageSize={itemsPerPage}
             total={tasks.length}
             onChange={handlePageChange}
           />
         </div>
         <NewTaskModal
-        setIsModalVisible={setIsModalVisible}
+          onClose={() => setIsModalVisible(false)}
+          task={null}
           visible={isModalVisible}
-          onCreate={handleCreate}
+          onSubmit={handleCreate}
         />
       </div>
     </Card>
