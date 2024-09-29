@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -39,36 +40,23 @@ public class AuthenticationService {
         this.passwordEncoder = passwordEncoder;
     }
 
-
-    public User authenticate(LoginRequestDto input) {
-        try {
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            input.getEmail(),
-                            input.getPassword()
-                    )
-            );
-
-            // Get the Optional<User> from the repository
-            Optional<User> optionalUser = userRepository.findByEmail(input.getEmail());
-
-            // Check if the user exists
-            if (optionalUser.isPresent()) {
-                // Get the User object from the Optional
-                User user = optionalUser.get();
-
-                // Authentication successful, retrieve the user
-                return user;
-            } else {
-                // User not found, throw an exception
-                throw new UsernameNotFoundException("User not found with email: " + input.getEmail());
-            }
-        } catch (AuthenticationException e) {
-            // Authentication failed, throw an exception
+    public User authenticate(LoginRequestDto loginRequest) throws AuthenticationException {
+        Optional<User> userOptional = userRepository.findByEmail(loginRequest.getEmail());
+        if (!userOptional.isPresent()) {
             throw new UserNotFoundException(messageSource.getMessage(
                     "user.not.found",
                     null,
                     Locale.forLanguageTag(currentLocale)));
         }
+
+        User user = userOptional.get();
+        if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
+            throw new UserNotFoundException(messageSource.getMessage(
+                    "user.not.found",
+                    null,
+                    Locale.forLanguageTag(currentLocale)));
+        }
+
+        return user;
     }
 }
