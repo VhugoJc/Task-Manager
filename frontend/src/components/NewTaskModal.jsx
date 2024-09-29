@@ -3,17 +3,17 @@ import NewTaskForm from './NewTaskForm';
 import { createTask, updateTask } from '../api/task'; // Import updateTask API
 import { useContext, useEffect } from 'react';
 import { UserContext } from '../context/UserContext';
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 // Function to format task values
 const formatTaskValues = (values) => {
   return {
     ...values,
-    dueDate: values.dueDate ? moment(values.dueDate).toISOString() : null,
+    dueDate: values.dueDate ? values.dueDate.format('YYYY-MM-DDTHH:mm:ss') : null,
   };
 };
 
-const TaskModal = ({ visible, task, onSubmit, onClose }) => {
+const TaskModal = ({ visible, task, onSubmit, onClose, onSubmitEdit }) => {
   const [form] = Form.useForm();
   const { getToken } = useContext(UserContext);
 
@@ -21,7 +21,7 @@ const TaskModal = ({ visible, task, onSubmit, onClose }) => {
     if (task) {
       form.setFieldsValue({
         ...task,
-        dueDate: task.dueDate ? moment(task.dueDate) : null,
+        dueDate: task.dueDate ? dayjs(task.dueDate) : null,
       });
     } else {
       form.resetFields();
@@ -30,16 +30,19 @@ const TaskModal = ({ visible, task, onSubmit, onClose }) => {
 
   const handleSubmit = async (values) => {
     const token = getToken();
+    console.log(token);
     const formattedValues = formatTaskValues(values);
     try {
       if (task) {
-        await updateTask(task.id, formattedValues, token);
+        const updatedTask = await updateTask(task.id, formattedValues, token);
         message.success('Task updated successfully');
+        onSubmitEdit(updatedTask);
+        return;
       } else {
-        await createTask(formattedValues, token);
+        const createdTask = await createTask(formattedValues, token);
         message.success('Task created successfully');
-        onSubmit(formattedValues);
-        return
+        onSubmit(createdTask);
+        return;
       }
     } catch (error) {
       message.error(`Failed to ${task ? 'update' : 'create'} task`);

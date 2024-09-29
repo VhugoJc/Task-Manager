@@ -46,9 +46,9 @@ export const createTask = async (taskData, token) => {
   };
   
 // Update an existing task
-export const updateTask = async (taskId, taskData) => {
+export const updateTask = async (taskId, taskData, token) => {
+  console.log(taskData);
   try {
-    const token = getToken();
     const response = await axios.put(`${API_URL}/${taskId}`, taskData, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -61,9 +61,8 @@ export const updateTask = async (taskId, taskData) => {
 };
 
 // Delete a task
-export const deleteTask = async (taskId) => {
+export const deleteTask = async (taskId, token) => {
   try {
-    const token = getToken();
     const response = await axios.delete(`${API_URL}/${taskId}`, {
       headers: {
         Authorization: `Bearer ${token}`,

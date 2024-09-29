@@ -14,6 +14,7 @@ const TaskSection = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const itemsPerPage = 10;
   const [loading, setLoading] = useState(true);
+  const [taskModal, setTaskModal] = useState(null);
 
   // Calculate the indices for slicing the tasks array
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -41,9 +42,14 @@ const TaskSection = () => {
     fetchTasks();
   }, []);
 
+  const handleEdit = (task) => {
+    setTaskModal(task);
+    setIsModalVisible(true);
+  };
+
   const handleFilterChange = (filters) => {
     const { searchTerm, status } = filters;
-    const filteredTasks = tasksData.filter(
+    const filteredTasks = tasks.filter(
       (task) =>
         (searchTerm === "" ||
           task.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -55,11 +61,11 @@ const TaskSection = () => {
   };
 
   const handleAddTask = () => {
+    setTaskModal(null);
     setIsModalVisible(true);
   };
 
   const handlePageChange = (page) => {
-    console.log("Page changed to: ", page);
     setCurrentPage(page);
   };
 
@@ -72,6 +78,13 @@ const TaskSection = () => {
     setIsModalVisible(false);
   };
 
+  const submitEdit = (values) => {
+    const updatedTasks = tasks.map((task) =>
+      task.id === values.id ? { ...task, ...values } : task
+    );
+    setTasks(updatedTasks);
+    setIsModalVisible(false);
+  };
   if (loading) {
     return <p>Loading...</p>;
   }
@@ -101,7 +114,10 @@ const TaskSection = () => {
           </Col>
         </Row>
         <div className="table-section">
-          <TaskTable tasks={currentTasks} />
+          <TaskTable 
+            tasks={currentTasks}
+            handleEdit={handleEdit}
+           />
         </div>
         <div className="pagination-container">
           <Pagination
@@ -113,9 +129,10 @@ const TaskSection = () => {
         </div>
         <NewTaskModal
           onClose={() => setIsModalVisible(false)}
-          task={null}
+          task={taskModal}
           visible={isModalVisible}
           onSubmit={handleCreate}
+          onSubmitEdit={submitEdit}
         />
       </div>
     </Card>

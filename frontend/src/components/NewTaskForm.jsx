@@ -1,9 +1,9 @@
 import { Form, Input, DatePicker } from 'antd';
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 // Custom validation rule to check if the date is in the future
 const validateFutureDate = (_, value) => {
-  if (value && value.isBefore(moment(), 'day')) {
+  if (value && value.isBefore(dayjs(), 'day')) {
     return Promise.reject(new Error('Due date must be a future date'));
   }
   return Promise.resolve();

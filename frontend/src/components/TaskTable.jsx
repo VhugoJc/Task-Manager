@@ -1,29 +1,35 @@
 import { Table, Checkbox } from "antd";
 import { useState } from "react";
 
-const columns = [
-  {
-    title: "Task Name",
-    dataIndex: "name",
-    key: "name",
-  },
-  {
-    title: "Due Date",
-    dataIndex: "dueDate",
-    key: "dueDate",
-  },
-  {
-    title: "Completed",
-    dataIndex: "completed",
-    key: "completed",
-    render: (completed) => <Checkbox checked={completed} />,
-  },
-];
 
-const TaskTable = ({ tasks }) => {
+
+const TaskTable = ({ tasks, handleEdit }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10; // Number of tasks per page
-
+  const columns = [
+    {
+      title: "Task Name",
+      dataIndex: "name",
+      key: "name",
+    },
+    {
+      title: "Due Date",
+      dataIndex: "dueDate",
+      key: "dueDate",
+    },
+    {
+      title: "Completed",
+      dataIndex: "completed",
+      key: "completed",
+      render: (completed) => <Checkbox checked={completed} />,
+    },
+    {
+      title:"Actions",
+      dataIndex: "actions",
+      key: "actions",
+      render: (_,e) => <a onClick={()=>handleEdit(e)}>Edit</a>,
+    }
+  ];
   return (
     <div style={{ width: 800, position: 'relative' }}> {/* Set fixed width */}
       <Table
