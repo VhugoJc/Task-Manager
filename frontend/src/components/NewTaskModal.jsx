@@ -30,7 +30,6 @@ const TaskModal = ({ visible, task, onSubmit, onClose, onSubmitEdit }) => {
 
   const handleSubmit = async (values) => {
     const token = getToken();
-    console.log(token);
     const formattedValues = formatTaskValues(values);
     try {
       if (task) {

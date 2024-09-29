@@ -47,7 +47,6 @@ export const createTask = async (taskData, token) => {
   
 // Update an existing task
 export const updateTask = async (taskId, taskData, token) => {
-  console.log(taskData);
   try {
     const response = await axios.put(`${API_URL}/${taskId}`, taskData, {
       headers: {
