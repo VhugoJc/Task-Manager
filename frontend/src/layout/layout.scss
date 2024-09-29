@@ -1,0 +1,78 @@
+.user-layout, .auth-layout  {
+    position: absolute;
+    right: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+
+    &-header {
+        background: #805AD5; // Your main color
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &-content {
+        display: flex;
+        justify-content: center;
+        height: calc(100vh - 64px - 64px); // Adjust height for header and footer
+        overflow: hidden; // Prevent scrolling
+    }
+
+    &-footer {
+        background: #333;
+        color: white;
+        text-align: center;
+    }
+
+    @media (max-width: 768px) { // Adjust breakpoint as needed
+        &-content {
+            height: auto; // Allow content to grow vertically
+            padding: 2rem 1rem; // Add padding for better mobile view
+        }
+
+        .login-card {
+            width: 100%; // Card takes full width on mobile
+            min-width: auto; // Remove min-width restriction
+            max-width: 400px; // Limit card width on larger screens
+        }
+    }
+}
+.auth-layout{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: url("../../public/pattern_hexagon-6_1_2_0-0_0_1__ffffff_805ad5.png");
+}
+// src/layout/layout.scss
+.header {
+    background: #805AD5; // Your main color
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 64px - 64px); // Adjust height for header and footer
+    overflow: hidden; // Prevent scrolling
+  }
+  
+  .footer {
+    background: #333;
+    color: white;
+    text-align: center;
+  }
+  
+  .ant-menu-overflow-item, .ant-menu-overflow{
+    width: 50px !important;
+    background-color: transparent !important;
+  }

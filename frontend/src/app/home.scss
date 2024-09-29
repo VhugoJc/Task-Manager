@@ -1,0 +1,14 @@
+.task-manager-container {
+    display: flex;
+    flex-direction: column; // Stack filter and table vertically
+    height: 100%; // Make the container take up full available height
+  
+    .filter-section {
+      margin-bottom: 16px; // Add spacing below the filter
+    }
+  
+    .table-section {
+      flex-grow: 1; // Allow the table section to grow to fill available space
+      overflow-y: auto; // Add vertical scroll to the table section only
+    }
+  }
