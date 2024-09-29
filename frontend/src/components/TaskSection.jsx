@@ -1,10 +1,10 @@
-import { Card, Col, Row, Pagination, Button } from "antd";
+import { Card, Col, Row, Pagination, Button, Modal, message} from "antd";
 import TaskTable from "./TaskTable";
 import TaskFilter from "./TaskFilter";
 import "./TaskSection.scss";
 import { useContext, useEffect, useState } from "react";
 import NewTaskModal from "./NewTaskModal";
-import { getTasks } from "../api/task";
+import { deleteTask, getTasks } from "../api/task";
 import { UserContext } from "../context/UserContext";
 
 const TaskSection = () => {
@@ -22,6 +22,7 @@ const TaskSection = () => {
 
   // Slice the tasks array to get the items for the current page
   const currentTasks = tasks.slice(startIndex, endIndex);
+  const { confirm } = Modal;
 
   useEffect(() => {
     const fetchTasks = async () => {
@@ -78,6 +79,30 @@ const TaskSection = () => {
     setIsModalVisible(false);
   };
 
+  const handleDelete = (task) => {
+    confirm({
+      title: 'Are you sure you want to delete this task?',
+      content: 'This action cannot be undone.',
+      okText: 'Yes',
+      okType: 'danger',
+      cancelText: 'No',
+      onOk() {
+        const token = getToken();
+        deleteTask(task.id, token)
+          .then(() => {
+            message.success('Task deleted successfully');
+            const updatedTasks = tasks.filter((t) => t.id !== task.id);
+            setTasks(updatedTasks);
+          })
+          .catch((error) => {
+            message.error('Failed to delete task');
+            console.error('Delete Task Failed:', error);
+          });
+      }
+    });
+    ;
+  }
+
   const submitEdit = (values) => {
     const updatedTasks = tasks.map((task) =>
       task.id === values.id ? { ...task, ...values } : task
@@ -117,6 +142,7 @@ const TaskSection = () => {
           <TaskTable 
             tasks={currentTasks}
             handleEdit={handleEdit}
+            handleDelete={handleDelete}
            />
         </div>
         <div className="pagination-container">

@@ -1,9 +1,10 @@
+import { DeleteOutlined } from "@ant-design/icons";
 import { Table, Checkbox } from "antd";
 import { useState } from "react";
 
 
 
-const TaskTable = ({ tasks, handleEdit }) => {
+const TaskTable = ({ tasks, handleEdit, handleDelete}) => {
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10; // Number of tasks per page
   const columns = [
@@ -27,8 +28,11 @@ const TaskTable = ({ tasks, handleEdit }) => {
       title:"Actions",
       dataIndex: "actions",
       key: "actions",
-      render: (_,e) => <a onClick={()=>handleEdit(e)}>Edit</a>,
-    }
+      render: (_,e) => <>
+        <a onClick={()=>handleEdit(e)}>Edit</a>
+        <DeleteOutlined onClick={()=>handleDelete(e)}  style={{ marginLeft: 8, color: 'red', cursor: 'pointer' }} /> 
+      </>,
+    },
   ];
   return (
     <div style={{ width: 800, position: 'relative' }}> {/* Set fixed width */}
