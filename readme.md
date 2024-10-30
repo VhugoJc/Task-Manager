@@ -1,6 +1,6 @@
 # React Spring Boot CRUD Application
 
-This is a basic CRUD (Create, Read, Update, Delete) application built using React for the frontend and Spring Boot for the backend.
+This is a CRUD (Create, Read, Update, Delete) application built using React for the frontend and Spring Boot for the backend.
 
 ## Features
 
