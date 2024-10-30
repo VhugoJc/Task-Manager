@@ -1,10 +1,10 @@
 # React Spring Boot CRUD Application
 
-This is a basic CRUD (Create, Read, Update, Delete) application built using React for the frontend and Spring Boot for the backend.
+This is a CRUD (Create, Read, Update, Delete) application built using React for the frontend and Spring Boot for the backend.
 
 ## Features
 
-- **Create:** Add new items to the database.
+- **Create:** Add new items to the database .
 - **Read:** View a list of all items, or details of a specific item.
 - **Update:** Modify existing items.
 - **Delete:** Remove items from the database.
