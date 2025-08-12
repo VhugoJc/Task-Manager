@@ -1,4 +1,4 @@
-# React and Spring Boot CRUD Task Application
+# Next JS and Spring Boot CRUD Task Application
 
 This is a CRUD (Create, Read, Update, Delete) application built using React for the frontend and Spring Boot for the backend.
 
